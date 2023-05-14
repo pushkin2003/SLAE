@@ -1,0 +1,2 @@
+/usr/bin/ar qc libproject.a CMakeFiles/project.dir/project/containers/vector.cpp.o CMakeFiles/project.dir/project/matrix/CSR/CSR.cpp.o CMakeFiles/project.dir/project/matrix/ThreeDiag/ThreeDiag.cpp.o CMakeFiles/project.dir/project/matrix/dense/dense.cpp.o CMakeFiles/project.dir/project/solver/sweepMethod.cpp.o
+/usr/bin/ranlib libproject.a

@@ -1,55 +1,73 @@
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include <numeric>
+#ifndef SLAE_4TERM_VECTOR_OPERATIONS_H
+#define SLAE_4TERM_VECTOR_OPERATIONS_H
 
-enum class NormType{
-    InfNorm = 0,
-    FirstNorm = 1,
-    SecondNorm = 2
-};
+#include<iostream>
+#include<vector>
 
-
-template<typename value_t>
-value_t operator*(const std::vector<value_t>& first, const std::vector<value_t>& second) {
-    return std::inner_product(first.begin(), first.end(), second.begin(), static_cast<value_t>(0),\
-    std::plus<>(), std::multiplies<>());
+template<typename T>
+std::vector<T> operator+(const std::vector<T>& left, const std::vector<T>& right) {
+    std::vector<T> res(left.size());
+    for (int i = 0; i < left.size(); ++i)
+        res[i] = left[i] + right[i];
+    return res;
 }
 
-template<typename value_t>
-value_t norm(const std::vector<value_t> v, NormType type_n=NormType::InfNorm){
-    auto norm = static_cast<value_t>(0);
-    if (type_n == NormType::InfNorm) {
-        auto abs_compare = [](value_t a, value_t b) {return std::abs(a) < std::abs(b);};
-        norm = std::abs(*std::max_element(v.begin(), v.end(), abs_compare));
-    }
-    if (type_n == NormType::FirstNorm) {
-        auto addition = [](value_t a, value_t b) {return std::abs(a) + std::abs(b);};
-        norm = std::accumulate(v.begin(), v.end(), static_cast<value_t>(0), addition);
-    }
-    else if (type_n == NormType::SecondNorm) {
-        norm = std::sqrt(v*v);
-    }
-    return norm;
+template<typename T>
+std::vector<T> operator-(const std::vector<T>& left, const std::vector<T>& right) {
+    std::vector<T> res(left.size());
+    for (int i = 0; i < left.size(); ++i)
+        res[i] = left[i] - right[i];
+    return res;
 }
 
-template<NormType type, typename value_t>
-value_t Norm(const std::vector<value_t>& v) {return static_cast<value_t>(0);};
-
-template<>
-double Norm<NormType::InfNorm>(const std::vector<double>& v){
-    auto abs_compare = [](double a, double b) {return std::abs(a) < std::abs(b);};
-    return std::abs(*std::max_element(v.begin(), v.end(), abs_compare));
+template<typename T>
+std::vector<T> operator*(T left, const std::vector<T>& right) {
+    std::vector<T> res(right.size());
+    for (int i = 0; i < right.size(); ++i)
+        res[i] = right[i] * left;
+    return res;
 }
 
-template<>
-double Norm<NormType::FirstNorm>(const std::vector<double>& v){
-    auto addition = [](double a, double b) {return a + std::abs(b);};
-    return std::accumulate(v.begin(), v.end(), static_cast<double>(0), addition);
+template<typename T>
+std::vector<T> operator*(const std::vector<T>& left, T right) {
+    std::vector<T> res(left.size());
+    for (int i = 0; i < left.size(); ++i)
+        res[i] = left[i] * right;
+    return res;
 }
 
-template<>
-double Norm<NormType::SecondNorm>(const std::vector<double>& v) {
-    return std::sqrt(v*v);
+template<typename T>
+T operator*(const std::vector<T>& left, const std::vector<T>& right) {
+    T res = 0;
+    for (int i = 0; i < left.size(); ++i)
+        res += left[i] * right[i];
+    return res;
 }
 
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& vec) {
+    for (const auto& v: vec)
+        os << v << " ";
+    return os;
+}
+
+template<typename T>
+std::vector<T>& operator/=(std::vector<T>& left, T right) {
+    for (auto& v: left)
+        v /= right;
+    return left;
+}
+
+template<typename T>
+bool isZero(const std::vector<T>& vec) {
+    for (auto& v: vec)
+        if (v != 0) return false;
+    return true;
+}
+
+template<typename T>
+T norm(const std::vector<T>& first, const std::vector<T>& second) {
+    return sqrt(first * second);
+}
+
+#endif 

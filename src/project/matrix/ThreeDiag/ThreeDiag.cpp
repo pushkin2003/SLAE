@@ -25,6 +25,6 @@ ThreeDiagonalMatrix::ThreeDiagonalMatrix(std::vector<double> a, std::vector<doub
 		}
 }
 
-std::vector<std::vector<double>> ThreeDiagonalMatrix::returnMatrix() {
+[[nodiscard]] std::vector<std::vector<double>> ThreeDiagonalMatrix::returnMatrix() {
 	return matrix;
 }

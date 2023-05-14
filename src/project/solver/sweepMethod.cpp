@@ -1,10 +1,6 @@
-#include<iostream>
-#include<vector>
-#include<array>
 #include "sweepMethod.h"
-#include "project/matrix/ThreeDiag/ThreeDiag.h"
 
-sweepMethod::sweepMethod (std::vector<double>a, std::vector<double> b, std::vector<double> c, std::vector<double> free) {
+sweepMethod::sweepMethod(std::vector<double> a, std::vector<double> b, std::vector<double> c, std::vector<double> free) {
     ThreeDiagonalMatrix threeDiagonalMatrix(a, b, c);
     threeDiagMatrix = threeDiagonalMatrix.returnMatrix();
     freeCoeff = free;

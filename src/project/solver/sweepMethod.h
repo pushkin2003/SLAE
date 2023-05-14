@@ -4,6 +4,7 @@
 #include<iostream>
 #include<vector>
 #include<array>
+#include "../matrix/ThreeDiag/ThreeDiag.h"
 
 class sweepMethod {
 private:

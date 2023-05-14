@@ -7,7 +7,7 @@
 #include "dense.h"
 
 dense::dense(std::vector<std::vector<double>> a) {
-    matrix.resize(a.size());
+   matrix.resize((a.size( )));  
     for(size_t i = 0; i < a.size(); i++)
         matrix[i].resize(a[0].size());
 

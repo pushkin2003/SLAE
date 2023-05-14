@@ -1,28 +1,28 @@
-#include "../vector/Norm.h"
-#include "../matrix/CSR.h"
+#ifndef SimpleIteration
+#define SimpleIteration
+
+#include "../matrix/CSR/CSR.h"
 
 template<typename T>
-std::vector<T>SimpleIteration(const matrix::CSR<T> &a, const std::vector<T> &b, const std::vector<T> X_0, const T &taor,const T &tolerance){
-    auto r = a * x -b;
-    std::vector<T> x = X_0
-    while (norm(r) > tolerance) {
-        x = x - taor*r;
-        r = a * x -b;
+std::pair<std::vector<double>, std::pair<size_t, std::vector<double>>> Simple_iteration_method
+(const std::vector<T>& x_0, const std::vector<T>& b, double tau, double accuracy, CSR<T> matrix) 
+{
+    std::vector<T> x = x_0;
+    std::vector<T> r(matrix,matrix.size());
+    for(int i = 0; i < matrix,matrix.size(); i++)
+        r[i] = b[i] - matrix.matrix[i].value * x[i];
+    size_t count = 0;
+    std::vector<double> nev{std::sqrt(r * r)};
+    while (nev[count] > accuracy) {
+        std::vector<T> r(matrix,matrix.size());
+    for(int i = 0; i < matrix,matrix.size(); i++)
+        r[i] = b[i] - matrix.matrix[i].value * x[i];
+        x = x + tau * r;
+        nev.push_back(std::sqrt(r * r));
+        count++;
     }
-    return x;
-
-}
-template<typename T>
-std::vector<T> SimpleIteration(const matrix::CSR<T> &a, const std::vector<T> &b, const std::vector<T> X_0, const T &taor,const T &tolerance){
-    std::vector<std::vector<T>> steps{}; steps.reserve(100);
-
-    std::vector<T> x = X_0;
-    std::vector<T> r = A* x -b;
-    x = x - tao*r;
-    r = a * x - b;
-   steps.push_back(x);
-   
-   return{x, steps}; 
-   
+    return std::make_pair(x, std::make_pair(count, nev));
 }
 
+
+#endif

@@ -1,26 +1,33 @@
-#include<iostream>
-#include<vector>
-#include<stdlib.h>
-#include<array>
 #include "CSR.h"
 
-CSR::CSR(std::vector<std::vector<double>> a) {
-    matrix.resize(3);
-	for(std::size_t i = 0; i < a.size(); i++) {
-        for(std::size_t j = 0; j < a[0].size(); j ++) {
-            if(a[i][j] != 0) {
-                std::size_t N = matrix[0].size();
-                matrix[0].resize(N + 1);
-                matrix[1].resize(N + 1);
-                matrix[2].resize(N + 1);
-                matrix[0][N] = i;
-                matrix[1][N] = j;
-                matrix[2][N] = a[i][j];
+template<typename T>
+CSR<T>::CSR(std::vector<std::vector<T>> a) {
+    std::cout<<"xuy";
+    size = 0;
+    matrix.resize(1);
+	for(size_t i = 0; i < a.size(); i++) {
+        for(size_t j = 0; j < a[i].size(); j++)
+            if (a[i].value != 0) {
+                matrix[i].i = i;
+                matrix[i].j = j;
+                matrix[i].value = a[i][j];
+                size++;
+                matrix.resize(matrix.size() + 1);
             }
-        }
     }
 }
 
-[[nodiscard]] std::vector<std::vector<double>> CSR::returnMatrix() {
-	return matrix;
+template<typename T>
+[[nodiscard]] int CSR<T>::sizeMatrix() {
+    return size;
+}
+
+template<typename T>
+size_t CSR<T>::returnNumb(int i, int j) {
+    if(j == 0)
+        return matrix[i].i;
+    if(j == 1)
+        return matrix[i].j;
+    if(j == 2)
+        return matrix[i].value;
 }
